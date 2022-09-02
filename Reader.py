@@ -49,7 +49,7 @@ class Reader(motor.Motor):
     def __init__(self, controller):
         super().__init__(self)
         self.controller = controller
-        self.led = LED(controller)
+        self.led = LED(controller, self.__ADDRESS_LED)
 
     # Home Reader Method.
     def home_reader(self):
