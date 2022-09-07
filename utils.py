@@ -5,6 +5,10 @@ import sys
 import time
 
 def check_type(value, want_type):
+    if want_type == int:
+        value = int(value)
+    elif want_type == float:
+        value = int(value)
     if type(value) != want_type:
         sys.exit("ERROR (utils, check_type): value ({0}) is not the valid type ({1})".format(value, want_type))
 
@@ -45,7 +49,7 @@ def check_limit(value, limit, mode='<', verbose=True):
             if value != limit:
                 return True
         if verbose:
-            print(f"WARNING (utils, check_limit): {value} {mode} {limit} is False...")
+            print("WARNING (utils, check_limit): {0} {1} {2} is False...".format(value, mode, limit))
         return False
     sys.exit("ERROR (utils, check_limit): mode ({0}) is not valid!".format(mode))
 
@@ -66,4 +70,4 @@ def wait(controller, wait_for='\r', timeout=10, verbose=True):
         if response == wait_for:
             break
     if verbose:
-        print(f"WARNING (utils, wait): timeout ({timeout} seconds) reached and {wait_for} has not been found....")
+        print("WARNING (utils, wait): timeout ({0} seconds) reached and {1} has not been found....".format(timeout, wait_for))
