@@ -16,8 +16,6 @@ CREATED ON:
 
 import sys
 
-from upper_gantry_coordinate import UpperGantryCoordinate
-
 class Coordinate():
     # Public variables.
     x = None
@@ -31,25 +29,17 @@ class Coordinate():
             self.x = location[0]
             self.y = location[1]
             self.z = location[2]
-        elif type(location) == str:
-            _ = _getCoordinateByName(location)
-            self.x = _[0]
-            self.y = _[1]
-            self.z = _[2]
 
     def move(self, location):
         if type(location) == list:
             self.x = location[0]
             self.y = location[1]
             self.z = location[2]
-        elif type(location) == str:
-            _ = _getCoordinateByName(location)
-            self.x = _[0]
-            self.y = _[1]
-            self.z = _[2]
 
 coordinates = {
     'deck_plate' : {
+        'safe': [-240000, -200000, -150000, 0],
+        'test' : [-240000, -337000, 0, 0],
         'sample_loading' : {},
         'reagent_cartridge' : {},
         'tip_trays' : {
@@ -126,6 +116,9 @@ coordinates = {
     }
 
 coordinate_names = [
+    'home',
+    'safe',
+    'test',
     'tip_trays_tray0_row0',
     'tip_trays_tray0_row1',
     'tip_trays_tray0_row2',
@@ -175,55 +168,3 @@ coordinate_names = [
     'tip_trays_tray3_row10',
     'tip_trays_tray3_row11'
     ]
-
-def get_coordinate_by_name(coordinate_name):
-    # Check if the coordinate_name is valid.
-    if coordinate_name not in coordinate_names:
-        sys.exit("ERROR (coordinate, get_coordinate_by_name): '{0}' is not a valid coordinate name!".format(coordinate_name))
-    # Initialize the upper gantry coordinate object.
-    ugc = UpperGantryCoordinate()
-    # Get the coordinate by name.
-    if coordinate_name == 'tip_trays_tray0_row0':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][0]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row1':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][1]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row2':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][2]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row3':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][3]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row4':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][4]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row5':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][5]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row6':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][6]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row7':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][7]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row8':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][8]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row9':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][9]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row10':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][10]
-        return ugc.update(x, y, z, drip_plate)
-    elif coordinate_name == 'tip_trays_tray0_row11':
-        x, y, z, drip_plate = coordinates['deck_plate']['tip_trays'][0][11]
-        return ugc.update(x, y, z, drip_plate)
-
-def _getCoordinateByName(coordinate_name):
-    coordinate_array = [-1,-1,-1]
-    if coordinate_name == '':
-        return
-    elif coordinate_name == 'tip_trays_tray0_row0':
-        coordinate_array = coordinates['deck_plate']['tip_trays'][0][0]
-    return coordinate_array
