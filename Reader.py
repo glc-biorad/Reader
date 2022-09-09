@@ -10,7 +10,15 @@ from reader_coordinate import ReaderCoordinate, target_to_reader_coordinate
 from reader_velocity import ReaderVelocity
 
 import motor
+
 from led import LED
+# this import requires numpy, check for compatability (iron python)
+try:
+    import camera
+    ignore_camera = 0
+except (ModuleNotFoundError, ImportError) as e:
+    ignore_camera = 1
+    print('Unable to import modules. Continuing without camera')
 
 class Reader(motor.Motor):
     # Public variables.
@@ -50,6 +58,9 @@ class Reader(motor.Motor):
         super().__init__(self)
         self.controller = controller
         self.led = LED(controller, self.__ADDRESS_LED)
+        self.illumination_off() # turn off leds incase of previous error
+        if ignore_camera == 0:
+            self.imager = camera.ImagerController()
 
     # Home Reader Method.
     def home_reader(self):
@@ -102,15 +113,21 @@ class Reader(motor.Motor):
 
     # Capture Image Method.
     def capture_image(self):
-        return None
+        # this method requires numpy, will not work with IronPython
+        image = self.imager.snap_single()
+        return image
 
     # Set Cartridge Temp Method.
-    def set_cartridge_temp(self, number):
+    def set_cartridge_temp(self, number, temp):
         return None
 
-    # Set Exposer Method.
-    def set_exposure(self):
-        return None
+    # Set Exposure Time Method.
+    def set_exposure(self, exposuretime_microseconds):
+        self.imager.setExposureTimeMicroseconds(exp_time_microseconds=exposuretime_microseconds)
+
+    # Get Exposure Time Method
+    def get_exposure(self):
+        return self.imager.getExposureTime()
 
     # Start Camera Streaming Method.
     def start_camera_streaming(self):
