@@ -7,6 +7,7 @@
 - reader_velocity.py
 - motor.py
 - led.py
+- pyspin
 
 # Reader Class
 - Public Variables:
